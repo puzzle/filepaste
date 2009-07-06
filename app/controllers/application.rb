@@ -30,25 +30,24 @@ class ApplicationController < ActionController::Base
 
   def authenticate
     authenticate_or_request_with_http_basic @filepaste_settings['general']['title'] do |username, password|
-      ldap = Net::LDAP.new  :host => @filepaste_settings['ldap']['host'],
-                            :base => @filepaste_settings['ldap']['base'],
-                            :port => @filepaste_settings['ldap']['port']
+      ldap = Net::LDAP.new :host => @filepaste_settings['ldap']['host'],
+                           :port => @filepaste_settings['ldap']['port'],
+                           :base => @filepaste_settings['ldap']['base']
 
-      # Search for the DN of the Username
-      username_with_dn = ""
-      filter = Net::LDAP::Filter.eq( 'uid', username )
-      ldap.search( :filter => filter ) { |entry| username_with_dn = entry.dn }
-      ldap.auth username_with_dn, password
-      
-      # Lest have a look if the user is in the admin group
-      admin_filter = Net::LDAP::Filter.eq( 'memberUid', username )
-      session[:admin_group] = false
-      ldap.search :filter => admin_filter,
+      begin
+        bind_result = ldap.bind_as :filter   => "(uid=#{username})",
+                                   :password => password
+      rescue Net::LDAP::LdapError
+        bind_result = false
+      end
+
+      # Lets have a look if the user is in the admin group
+      ldap.search :filter => Net::LDAP::Filter.eq('memberUid', username),
                   :base => @filepaste_settings['ldap']['admin_group_dn'] do |entry|
-                    session[:admin_group] = true
-                  end
+        session[:admin_group] = true
+      end
 
-      ldap.bind
+      bind_result
     end
   end
 
