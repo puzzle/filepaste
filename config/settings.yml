@@ -1,12 +1,13 @@
 
 general:
-        title: "FilePaste Server"
-        hash_length: "16"
-        help_text: "<ul>
-                        <li>Press the 'Browse...' button</li>
+        title: <%= ENV['RAILS_GENERAL_TITLE'] || 'FilePaste Server' %>
+        hash_length: <%= ENV['RAILS_GENERAL_HASH_LENGTH'] || '16' %>
+        help_text: <%= ENV['RAILS_GENERAL_HELP_TEXT'] || '
+                    <ul>
+                        <li>Press the "Browse..." button</li>
                         <li>Select the file you want to share</li>
                         <li>Write a short discription about what this file is for</li>
-                        <li>Press the 'Upload' button<li>
+                        <li>Press the "Upload" button<li>
                         <li>Uploading may take a while, this depends on the size of your file</li>
                         <li>As soon as the file is uploadet, you get the link where you can download the
                             File. Please copy this link NOW.</li>
@@ -16,10 +17,10 @@ general:
                     Please notice that hidding the file like FilePaste does is not a good way to prevent others from
                     stealing your data. If you share sensitive data, please take additional actions like encryption
                     to ensure security. For file encryption, take a look at 
-                    <a href=\"http://www.gnupg.org/\">http://www.gnupg.org/</a>"
+                    <a href="http://www.gnupg.org/">http://www.gnupg.org/</a>' %> 
 
 ldap:
-        host: "ldap.yourserver.com"
-        port: "389"
-        base: "dc=your,dc=base"
-        admin_group_dn: "cn=admins,ou=groups,dc=your,dc=base"
+        host: <%= ENV['RAILS_LDAP_HOST'] || 'ldap.yourserver.com' %>
+        port: <%= ENV['RAILS_LDAP_PORT'] || '389' %>
+        base: <%= ENV['RAILS_LDAP_BASE'] || 'dc=your,dc=base' %>
+        admin_group_dn: <%= ENV['RAILS_LDAP_ADMIN_GROUP_DN'] || 'cn=admins,ou=groups,dc=your,dc=base' %>

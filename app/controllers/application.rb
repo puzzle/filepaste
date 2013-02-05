@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # :secret => '87756b121176328abb8c413a7674af31'
   
   def load_settings
-    @filepaste_settings = YAML.load( File.open( RAILS_ROOT + "/config/settings.yml" ) )
+    @filepaste_settings = YAML.load( ERB.new( File.open( RAILS_ROOT + "/config/settings.yml" ).read ).result )
   end
 
   def authenticate
