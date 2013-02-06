@@ -13,8 +13,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require 'net/ldap'
-
 class ApplicationController < ActionController::Base
   before_filter :load_settings, :authenticate
 
@@ -25,7 +23,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # :secret => '87756b121176328abb8c413a7674af31'
   
   def load_settings
-    @filepaste_settings = YAML.load( ERB.new( File.open( RAILS_ROOT + "/config/settings.yml" ).read ).result )
+    @filepaste_settings = YAML.load( ERB.new( File.open( ::Rails.root.to_s + "/config/settings.yml" ).read ).result )
   end
 
   def authenticate

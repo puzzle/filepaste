@@ -9,7 +9,7 @@ body {
 	margin: 0; 	padding: 0;
 	font: normal 73%/1.5em 'Trebuchet MS', Tahoma, sans-serif;
 	color: #555;
-	background: #FFF url('../images/bg.jpg') repeat-x;
+	background: #FFF url(<%= asset_path 'bg.jpg' %>) repeat-x;
 	text-align: center;		
 }
 
@@ -138,7 +138,7 @@ textarea {
 input.button { 
 	margin: 0; 
 	font: bold 1em Arial, Sans-serif; 
-	background: #FFF url('../images/gradientbg.jpg') repeat-x; 
+	background: #FFF url(<%= asset_path 'gradientbg.jpg' %>) repeat-x; 
 	padding: 2px 3px; 
 	color: #333;	
 	border: 1px solid #DADADA;	
@@ -320,12 +320,12 @@ input.button {
 	font: normal 1.5em 'Trebuchet MS', Tahoma, Sans-serif;
 }
 #main ul li {
-	list-style-image: url(bullet.gif);
+	list-style-image: url(<%= asset_path 'bullet.gif' %>);
 }
 
 .post {
 	margin: 0; padding: 0;
-	background: #FFF url('../images/gradientbg.jpg') repeat-x;
+	background: #FFF url(<%= asset_path 'gradientbg.jpg' %>) repeat-x;
 	border: 1px solid #EFEDED;
 }
 .post .post-footer {
@@ -335,15 +335,15 @@ input.button {
 	font-size: 95%;
 }
 .post .post-footer .date {
-	background: url('../images/clock.gif') no-repeat 0 center;
+	background: url(<%= asset_path 'clock.gif' %>) no-repeat 0 center;
 	padding-left: 20px; margin: 0 10px 0 5px;
 }
 .post .post-footer .comments {
-	background: url('../images/comment.gif') no-repeat 0 center;
+	background: url(<%= asset_path 'comment.gif' %>) no-repeat 0 center;
 	padding-left: 20px; margin: 0 10px 0 5px;
 }
 .post .post-footer .readmore {
-	background: url('../images/page.gif') no-repeat 0 center;
+	background: url(<%= asset_path 'page.gif' %>) no-repeat 0 center;
 	padding-left: 20px; margin: 0 10px 0 5px;
 }
 

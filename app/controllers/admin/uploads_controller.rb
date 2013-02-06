@@ -50,7 +50,7 @@ class Admin::UploadsController < ApplicationController
   def destroy
     @upload = Upload.find(params[:id])
 
-    dirname = File.join RAILS_ROOT, 'public', 'downloads', @upload.hash_key
+    dirname = File.join ::Rails.root.to_s, 'public', 'downloads', @upload.hash_key
     filepath = File.join dirname, @upload.filename
     
     File.delete filepath

@@ -38,7 +38,7 @@ class UploadsController < ApplicationController
       hash_key << chars[rand(chars.size)]
     end
 
-    dirname = File.join RAILS_ROOT, 'public', 'downloads', hash_key
+    dirname = File.join ::Rails.root.to_s, 'public', 'downloads', hash_key
     filepath = File.join dirname, datafile.original_filename
 
     # Now we save the File to the disk

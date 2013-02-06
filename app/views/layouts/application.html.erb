@@ -24,6 +24,7 @@
   <meta name="Robots" content="noindex,nofollow" />
   <title><%= @filepaste_settings['general']['title'] %></title>
   <%= stylesheet_link_tag 'PixelGreen' %>
+  <%= javascript_include_tag :application %>
 </head>
 <body>
 
@@ -50,7 +51,7 @@
 	  
 	  <h1>Usage</h1>
 	  
-	  <p><%= @filepaste_settings['general']['help_text'] %></p>
+	  <p><%= @filepaste_settings['general']['help_text'].html_safe %></p>
 
 	</div>
       </div>
