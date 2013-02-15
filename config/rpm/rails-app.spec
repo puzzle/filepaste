@@ -19,7 +19,7 @@
 %define bundle_without_groups 'development test'
 
 # directories to exclude in rpm - relative to Rails.root
-%define exclude_dirs 'doc spec test vendor/cache log tmp db/production.sqlite3'
+%define exclude_dirs doc spec test vendor/cache log tmp db/production.sqlite3
 
 # those are set automatically by the ENV variable used
 # to generate the database yml
