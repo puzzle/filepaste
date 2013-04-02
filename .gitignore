@@ -2,3 +2,4 @@ log/*.log
 db/*.sqlite3
 public/downloads/*
 tmp/*
+config/development-environment.sh
