@@ -23,3 +23,13 @@ ldap:
         port: "389"
         base: "dc=your,dc=base"
         admin_group_dn: "cn=admins,ou=groups,dc=your,dc=base"
+        # ldap attribute used for login name, optional, default: uid
+        #username_attribute: "sn"
+        # ldap attribute used for group membership, optional, default: memberUid
+        #groupmember_attribute: "member"
+        # whether group member attribute uses full dn for members, optional, default: false
+        #groupmember_full_dn: true
+        # initial bind user to search for user entry for final authentication, optional
+        #bind_user: "cn=...,ou=...,dc=..."
+        # bind user password, optional, required if bind_user is set
+        #bind_password: "password"

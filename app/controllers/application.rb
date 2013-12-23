@@ -30,19 +30,36 @@ class ApplicationController < ActionController::Base
 
   def authenticate
     authenticate_or_request_with_http_basic @filepaste_settings['general']['title'] do |username, password|
-      ldap = Net::LDAP.new :host => @filepaste_settings['ldap']['host'],
-                           :port => @filepaste_settings['ldap']['port'],
-                           :base => @filepaste_settings['ldap']['base']
+      ldap_config = {:host => @filepaste_settings['ldap']['host'],
+                     :port => @filepaste_settings['ldap']['port'],
+                     :base => @filepaste_settings['ldap']['base']}
+      # set initial bind user, required if searching for the final bind user already requires auth
+      if @filepaste_settings['ldap']['bind_user']
+        ldap_config[:auth] = {:method => :simple,
+                              :username => @filepaste_settings['ldap']['bind_user'],
+                              :password => @filepaste_settings['ldap']['bind_password']}
+      end
+      ldap = Net::LDAP.new(ldap_config)
 
       begin
-        bind_result = ldap.bind_as :filter   => "(uid=#{username})",
+        username_attribute = @filepaste_settings['ldap']['username_attribute'] || 'uid'
+        bind_result = ldap.bind_as :filter   => Net::LDAP::Filter.eq(username_attribute, username),
                                    :password => password
       rescue Net::LDAP::LdapError
         bind_result = false
       end
 
       # Lets have a look if the user is in the admin group
-      ldap.search :filter => Net::LDAP::Filter.eq('memberUid', username),
+      groupmember_attribute = @filepaste_settings['ldap']['groupmember_attribute'] || 'memberUid'
+      if @filepaste_settings['ldap']['groupmember_full_dn']
+        ldap.search :filter => Net::LDAP::Filter.eq(username_attribute, username),
+                    :attributes => ['dn'] do |entry|
+          user = entry.dn
+        end
+      else
+        user = username
+      end
+      ldap.search :filter => Net::LDAP::Filter.eq(groupmember_attribute, user),
                   :base => @filepaste_settings['ldap']['admin_group_dn'] do |entry|
         session[:admin_group] = true
       end
